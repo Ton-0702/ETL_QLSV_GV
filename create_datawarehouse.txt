@@ -1,0 +1,72 @@
+CREATE TABLE "dim_teacher" (
+	"teacher_id" varchar(6) PRIMARY KEY,
+  	"name" varchar(35),
+  	"level" varchar(15),
+  	"nationality" varchar(45),
+  	"degree" varchar(45),
+  	"graduation_country" varchar(45),
+  	"graduation_year" int,
+  	"year" int,
+	"month" int,
+	"date"	int
+);
+
+CREATE TABLE "dim_subject" (
+  	"subject_id" varchar(6) PRIMARY KEY,
+  	"name_subject" varchar(80),
+  	"total_credit" int,
+	"program_semester" varchar(3)
+);
+
+CREATE TABLE "dim_student" (
+  	"student_id" varchar(6) PRIMARY KEY,
+  	"student_name" varchar(45),
+  	"sex" varchar(4),
+  	"academic_year" int,
+  	"class_name" varchar(10),
+	"year" int,
+	"month" int,
+	"date"	int
+);
+
+CREATE TABLE "dim_course_type" (
+  "type_id" int,
+  "type" varchar(15),
+  PRIMARY KEY ("type_id")
+);
+
+CREATE TABLE "dim_point" (
+  	"point_id" int,
+  	"score_tk1" float,
+  	"score_tk2" float,
+  	"score_tk3" float,
+  	"score_th1" float,
+  	"score_th2" float,
+  	"score_th3" float,
+  	"score_gk" float,
+  	"score_ck" float,
+  	PRIMARY KEY ("point_id")
+);
+
+CREATE TABLE "fact_report" (  	"id_report" int,
+  	"teacher_id" varchar(6),
+	"subject_id" varchar(6),
+	"student_id" varchar(6),
+	"point_id" int,
+	"type_id" int,
+	"tb_tk" float,
+	"tb_th" float,
+	"total_subject_teach" int,
+	
+  	PRIMARY KEY ("id_report")
+);
+
+ALTER TABLE "fact_report" ADD FOREIGN KEY ("teacher_id") REFERENCES "dim_teacher" ("teacher_id");
+
+ALTER TABLE "fact_report" ADD FOREIGN KEY ("subject_id") REFERENCES "dim_subject" ("subject_id");
+
+ALTER TABLE "fact_report" ADD FOREIGN KEY ("student_id") REFERENCES "dim_student" ("student_id");
+
+ALTER TABLE "fact_report" ADD FOREIGN KEY ("point_id") REFERENCES "dim_point" ("point_id");
+
+ALTER TABLE "fact_report" ADD FOREIGN KEY ("type_id") REFERENCES "dim_course_type" ("type_id");
